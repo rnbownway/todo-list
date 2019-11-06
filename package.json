@@ -2,15 +2,19 @@
 	"name": "todo-list",
 	"version": "1.0.0",
 	"description": "ToDo List",
-	"main": "src/index.js",
+	"main": "src/index.ts",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build": "cross-env NODE_ENV=production babel src --out-dir build --extensions '.js,.jsx,.ts,.tsx'"
 	},
 	"author": "Alexander Stryabkov",
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/cli": "^7.7.0",
-		"@babel/core": "^7.7.0"
+		"@babel/core": "^7.7.0",
+		"@babel/preset-env": "^7.7.1",
+		"@babel/preset-react": "^7.7.0",
+		"@babel/preset-typescript": "^7.7.0",
+		"cross-env": "^6.0.3"
 	},
 	"private": true
 }

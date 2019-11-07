@@ -1,7 +1,7 @@
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
 
-module.exports = {
+const config = {
     context: path.join(__dirname, 'src'),
 	entry: {
 		index: './index.ts'
@@ -43,4 +43,16 @@ module.exports = {
             '.tsx'
         ]
     }
+}
+
+module.exports = (_env, argv) => {
+	if (argv.mode === 'development') {
+		config.devtool = 'eval-source-map';
+	  }
+	
+	  if (argv.mode === 'production') {
+		config.devtool = false;
+	  }
+	
+	  return config;
 }

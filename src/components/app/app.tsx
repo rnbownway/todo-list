@@ -34,15 +34,30 @@ export default class App extends Component<{}, State> {
 
 		this.setState(prevState => {
 			const toggledTodo = {
-                ...prevState.todos[index],
-                completed: !prevState.todos[index].completed
-            }
-            
+				...prevState.todos[index],
+				completed: !prevState.todos[index].completed
+			}
+
 			return {
 				todos: [
 					...prevState.todos.slice(0, index),
-                    toggledTodo,
-                    ...prevState.todos.slice(index+1)
+					toggledTodo,
+					...prevState.todos.slice(index + 1)
+				]
+			}
+		})
+	}
+
+	handleDelete = (id: number) => {
+		const index = this.state.todos.findIndex(item => item.id === id)
+
+		if (index < 0) return
+
+		this.setState(prevState => {
+			return {
+				todos: [
+					...prevState.todos.slice(0, index),
+					...prevState.todos.slice(index + 1)
 				]
 			}
 		})
@@ -53,7 +68,11 @@ export default class App extends Component<{}, State> {
 			<div className={style.container}>
 				<h1>ToDo List</h1>
 				<TodoAddForm onSubmit={this.handleSubmit} />
-				<TodoList todos={this.state.todos} onToggle={this.handleToggle} />
+				<TodoList
+					todos={this.state.todos}
+                    onToggle={this.handleToggle}
+                    onDelete={this.handleDelete}
+				/>
 			</div>
 		)
 	}

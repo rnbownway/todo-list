@@ -6,10 +6,11 @@ type Props = {
 	text: string
 	completed: boolean
 	onToggle: () => void
+	onDelete: () => void
 }
 
 export default (props: Props) => {
-	const { text, completed, onToggle } = props
+	const { text, completed, onToggle, onDelete } = props
 
 	const todoText = completed ? (
 		<s>
@@ -26,7 +27,9 @@ export default (props: Props) => {
 	return (
 		<div className={style.container}>
 			{todoText}
-			<button className={style.delete}>Delete</button>
+			<button className={style.delete} onClick={onDelete}>
+				Delete
+			</button>
 		</div>
 	)
 }

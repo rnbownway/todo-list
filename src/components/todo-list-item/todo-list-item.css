@@ -1,0 +1,17 @@
+.todo {
+    margin-left: 1.25rem;
+    line-height: 35px;
+    cursor: pointer;
+    user-select: none;
+    max-width: 250px;
+}
+
+.delete {
+    margin-left: auto;
+    height: 35px;
+}
+
+.container {
+    display: flex;
+    width: 350px;
+}

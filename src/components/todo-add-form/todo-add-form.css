@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    justify-content: flex-start;
+    margin: 30px;
+}
+
+.input {
+    width: 300px;
+}

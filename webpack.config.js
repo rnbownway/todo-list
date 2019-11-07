@@ -1,10 +1,11 @@
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 var path = require('path');
 
 const config = {
     context: path.join(__dirname, 'src'),
 	entry: {
-		index: './index.ts'
+		index: './index.tsx'
 	},
 	output: {
 		path: path.join(__dirname, 'build')
@@ -15,15 +16,12 @@ const config = {
 				test: /\.[jt]sx?$/,
 				exclude: /node_modules/,
 				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: [
-							'@babel/preset-env',
-							'@babel/preset-react',
-							'@babel/preset-typescript'
-						]
-					}
+					loader: 'babel-loader'
 				}
+			},
+			{
+				test: /\.css$/,
+				use: ["style-loader", "css-loader"]
 			}
 		]
     },
@@ -33,7 +31,10 @@ const config = {
                 from: 'index.html',
                 to: 'index.html'
             }
-        ])
+		]),
+		new HtmlWebpackPlugin({
+			template: "./index.html"
+		})
     ],
     resolve: {
         extensions: [

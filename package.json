@@ -2,8 +2,9 @@
 	"name": "todo-list",
 	"version": "1.0.0",
 	"description": "ToDo List",
-	"main": "src/index.ts",
+	"main": "src/index.tsx",
 	"scripts": {
+		"start": "webpack-dev-server --mode development --open --hot",
 		"build": "webpack --mode development",
 		"build:prod": "webpack --mode production"
 	},
@@ -12,14 +13,25 @@
 	"devDependencies": {
 		"@babel/cli": "^7.7.0",
 		"@babel/core": "^7.7.0",
+		"@babel/plugin-proposal-class-properties": "^7.7.0",
 		"@babel/preset-env": "^7.7.1",
 		"@babel/preset-react": "^7.7.0",
 		"@babel/preset-typescript": "^7.7.0",
+		"@types/react": "^16.9.11",
+		"@types/react-dom": "^16.9.4",
 		"babel-loader": "^8.0.6",
 		"copy-webpack-plugin": "^5.0.5",
 		"cross-env": "^6.0.3",
+		"css-loader": "^3.2.0",
+		"html-webpack-plugin": "^3.2.0",
+		"style-loader": "^1.0.0",
 		"webpack": "^4.41.2",
-		"webpack-cli": "^3.3.10"
+		"webpack-cli": "^3.3.10",
+		"webpack-dev-server": "^3.9.0"
 	},
-	"private": true
+	"private": true,
+	"dependencies": {
+		"react": "^16.11.0",
+		"react-dom": "^16.11.0"
+	}
 }

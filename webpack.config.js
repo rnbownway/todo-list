@@ -19,21 +19,6 @@ var config = {
 				use: {
 					loader: 'babel-loader'
 				}
-			},
-			{
-				test: /\.css$/,
-				use: [
-					MiniCssExtractPlugin.loader,
-					{
-						loader: 'css-loader',
-						options: {
-							importLoaders: 1,
-							modules: {
-								localIdentName: '[local]-[hash:base64:5]'
-							}
-						}
-					}
-				]
 			}
 		]
 	},
@@ -56,6 +41,30 @@ var config = {
 	}
 }
 
+function setMiniCSS(mode) {
+	return {
+		test: /\.css$/,
+		use: [
+			{
+				loader: MiniCssExtractPlugin.loader,
+				options: {
+					hmr: mode === 'development',
+					reloadAll: true
+				}
+			},
+			{
+				loader: 'css-loader',
+				options: {
+					importLoaders: 1,
+					modules: {
+						localIdentName: '[local]-[hash:base64:5]'
+					}
+				}
+			}
+		]
+	}
+}
+
 module.exports = (_env, argv) => {
 	if (argv.mode === 'development') {
 		config.devtool = 'eval-source-map'
@@ -64,6 +73,10 @@ module.exports = (_env, argv) => {
 	if (argv.mode === 'production') {
 		config.devtool = false
 	}
+
+	config.module.rules.push(
+		setMiniCSS(argv.mode)
+	)
 
 	return config
 }

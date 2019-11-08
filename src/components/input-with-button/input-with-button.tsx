@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { NewTodo } from '../../types'
+import IconButton from '@material-ui/core/IconButton'
+import TextField from '@material-ui/core/TextField'
 
 const style = require('./input-with-button.css')
 
 type Props = {
 	onSubmit: (text: string) => void
 	onTextChange: (text: string) => void
-	newTodo: NewTodo	
-	buttonLabel: string
+	newTodo: NewTodo
+	IconComponent: ReactElement
 }
 
 const InputWithButton = (props: Props) => {
@@ -22,18 +24,19 @@ const InputWithButton = (props: Props) => {
 		props.onTextChange(text)
 	}
 
+	const { IconComponent } = props
+
 	return (
 		<form className={style.container} onSubmit={handleSubmit}>
-			<input
+			<TextField
 				className={style.input}
-				type="text"
 				placeholder="type here"
 				onChange={handleChange}
 				value={props.newTodo.text}
 			/>
-			<button type="submit" disabled={!props.newTodo.valid}>
-				{props.buttonLabel}
-			</button>
+			<IconButton type="submit" disabled={!props.newTodo.valid}>
+				{IconComponent}
+			</IconButton>
 		</form>
 	)
 }

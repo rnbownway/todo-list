@@ -4,6 +4,11 @@ import InputWithButton from '../input-with-button'
 import { connect } from 'react-redux'
 import { editMode, deleteTodo, toggleTodo, editDone } from '../../actions'
 import { Todo } from '../../types'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
+import SaveIcon from '@material-ui/icons/Save'
+import Checkbox from '@material-ui/core/Checkbox'
+import Typography from '@material-ui/core/Typography'
 
 const style = require('./todo-list-item.css')
 
@@ -31,7 +36,9 @@ const TodoListItem = (props: Props) => {
 	const { id, completed, text, isEdited } = item
 
 	const todoText = (
-		<span
+		<Typography
+			variant="body1"
+			gutterBottom
 			className={classnames([
 				style.todo,
 				{
@@ -41,32 +48,32 @@ const TodoListItem = (props: Props) => {
 			onClick={() => onToggleEdited(id)}
 		>
 			{text}
-		</span>
+		</Typography>
 	)
 
 	const editedTodo = (
 		<React.Fragment>
 			<InputWithButton
 				onSubmit={() => onToggleEdited(id)}
-				onTextChange={(text) => onEditDone(id, text)}
+				onTextChange={text => onEditDone(id, text)}
 				newTodo={{ text, valid: true }}
-				buttonLabel="Edit"
+				IconComponent={<SaveIcon />}
 			/>
 		</React.Fragment>
 	)
 
 	return (
 		<div className={style.container}>
-			<input
+			<Checkbox
 				className={style.checkbox}
-				type="checkbox"
 				checked={completed}
+				color="primary"
 				onChange={() => onToggleCompleted(id)}
 			/>
 			{!isEdited ? todoText : editedTodo}
-			<button className={style.button} onClick={() => onDelete(id)}>
-				Delete
-			</button>
+			<IconButton onClick={() => onDelete(id)}>
+				<DeleteIcon />
+			</IconButton>
 		</div>
 	)
 }

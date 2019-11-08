@@ -1,0 +1,26 @@
+.todo {
+    margin-left: 1.25rem;
+    line-height: 35px;
+    cursor: pointer;
+    user-select: none;
+    max-width: 250px;
+}
+
+.button {
+    margin-left: auto;
+    height: 35px;
+}
+
+.container {
+    display: flex;
+    width: 300px;
+    margin-top: 20px;
+}
+
+.checkbox {
+    margin: 11px;
+}
+
+.striked {
+    text-decoration: line-through;
+}

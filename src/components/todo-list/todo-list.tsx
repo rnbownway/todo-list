@@ -1,30 +1,34 @@
-import React, { Component } from 'react'
+import React, { Fragment } from 'react'
 import TodoListItem from '../todo-list-item'
 import { Todo } from '../../types'
 
 type Props = {
 	todos: Todo[]
-	onToggle: (id: number) => void
+    onToggleCompleted: (id: number) => void
+    onToggleEdited: (id: number) => void
+    onTextChange: (id: number, text: string) => void
 	onDelete: (id: number) => void
 }
 
 const TodoList = (props: Props) => {
-	const { todos, onToggle, onDelete } = props
+	const { todos, onToggleCompleted, onToggleEdited, onTextChange, onDelete } = props
 
 	const items = todos.map(item => {
 		const { id, ...itemProps } = item
 		return (
-			<li key={id}>
+			<Fragment key={id}>
 				<TodoListItem
-					onToggle={() => onToggle(id)}
+                    onToggleCompleted={() => onToggleCompleted(id)}
+                    onToggleEdited={() => onToggleEdited(id)}
+                    onTextChange={(text) => onTextChange(id, text)}
 					onDelete={() => onDelete(id)}
 					{...itemProps}
 				/>
-			</li>
+			</Fragment>
 		)
 	})
 
-	return <ul>{items}</ul>
+	return <div>{items}</div>
 }
 
 export default TodoList

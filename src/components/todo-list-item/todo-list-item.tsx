@@ -1,35 +1,69 @@
-import React, { Component } from 'react'
+import React from 'react'
+import classnames from 'classnames'
+import InputWithButton from '../input-with-button'
 
 const style = require('./todo-list-item.css')
 
 type Props = {
 	text: string
 	completed: boolean
-	onToggle: () => void
+	isEdited: boolean
+	onToggleCompleted: () => void
+	onToggleEdited: () => void
+	onTextChange: (text: string) => void
 	onDelete: () => void
 }
 
-export default (props: Props) => {
-	const { text, completed, onToggle, onDelete } = props
+const TodoListItem = (props: Props) => {
+	const {
+		text,
+		completed,
+		isEdited,
+		onToggleCompleted,
+		onToggleEdited,
+		onTextChange,
+		onDelete
+	} = props
 
-	const todoText = completed ? (
-		<s>
-			<span className={style.todo} onClick={onToggle}>
-				{text}
-			</span>
-		</s>
-	) : (
-		<span className={style.todo} onClick={onToggle}>
+	const todoText = (
+		<span
+			className={classnames([
+				style.todo,
+				{
+					[style.striked]: completed
+				}
+			])}
+			onClick={onToggleEdited}
+		>
 			{text}
 		</span>
+	)
+	
+	const editedTodo = (
+		<React.Fragment>
+			<InputWithButton
+				onSubmit={onToggleEdited}
+				onTextChange={onTextChange}
+				newTodo={{text, valid: true}}
+				buttonLabel="Save"
+			/>
+		</React.Fragment>
 	)
 
 	return (
 		<div className={style.container}>
-			{todoText}
-			<button className={style.delete} onClick={onDelete}>
+			<input
+				className={style.checkbox}
+				type="checkbox"
+				checked={completed}
+				onChange={onToggleCompleted}
+			/>
+			{!isEdited ? todoText : editedTodo}
+			<button className={style.button} onClick={onDelete}>
 				Delete
 			</button>
 		</div>
 	)
 }
+
+export default TodoListItem

@@ -6,12 +6,21 @@
     max-width: 250px;
 }
 
-.delete {
+.button {
     margin-left: auto;
     height: 35px;
 }
 
 .container {
     display: flex;
-    width: 350px;
+    width: 300px;
+    margin-top: 20px;
+}
+
+.checkbox {
+    margin: 11px;
+}
+
+.striked {
+    text-decoration: line-through;
 }

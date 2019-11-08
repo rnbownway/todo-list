@@ -1,29 +1,34 @@
 import React from 'react'
 import classnames from 'classnames'
 import InputWithButton from '../input-with-button'
+import { connect } from 'react-redux'
+import { editMode, deleteTodo, toggleTodo, editDone } from '../../actions'
+import { Todo } from '../../types'
 
 const style = require('./todo-list-item.css')
 
-type Props = {
-	text: string
-	completed: boolean
-	isEdited: boolean
-	onToggleCompleted: () => void
-	onToggleEdited: () => void
-	onTextChange: (text: string) => void
-	onDelete: () => void
+type MappedProps = {
+	onToggleEdited: (id: number) => void
+	onToggleCompleted: (id: number) => void
+	onDelete: (id: number) => void
+	onEditDone: (id: number, text: string) => void
 }
+
+type OwnProps = {
+	item: Todo
+}
+
+type Props = OwnProps & MappedProps
 
 const TodoListItem = (props: Props) => {
 	const {
-		text,
-		completed,
-		isEdited,
-		onToggleCompleted,
 		onToggleEdited,
-		onTextChange,
-		onDelete
+		onToggleCompleted,
+		onDelete,
+		onEditDone,
+		item
 	} = props
+	const { id, completed, text, isEdited } = item
 
 	const todoText = (
 		<span
@@ -33,19 +38,19 @@ const TodoListItem = (props: Props) => {
 					[style.striked]: completed
 				}
 			])}
-			onClick={onToggleEdited}
+			onClick={() => onToggleEdited(id)}
 		>
 			{text}
 		</span>
 	)
-	
+
 	const editedTodo = (
 		<React.Fragment>
 			<InputWithButton
-				onSubmit={onToggleEdited}
-				onTextChange={onTextChange}
-				newTodo={{text, valid: true}}
-				buttonLabel="Save"
+				onSubmit={() => onToggleEdited(id)}
+				onTextChange={(text) => onEditDone(id, text)}
+				newTodo={{ text, valid: true }}
+				buttonLabel="Edit"
 			/>
 		</React.Fragment>
 	)
@@ -56,14 +61,24 @@ const TodoListItem = (props: Props) => {
 				className={style.checkbox}
 				type="checkbox"
 				checked={completed}
-				onChange={onToggleCompleted}
+				onChange={() => onToggleCompleted(id)}
 			/>
 			{!isEdited ? todoText : editedTodo}
-			<button className={style.button} onClick={onDelete}>
+			<button className={style.button} onClick={() => onDelete(id)}>
 				Delete
 			</button>
 		</div>
 	)
 }
 
-export default TodoListItem
+const mapDispatchToProps = dispatch => ({
+	onToggleEdited: id => dispatch(editMode(id)),
+	onToggleCompleted: id => dispatch(toggleTodo(id)),
+	onDelete: id => dispatch(deleteTodo(id)),
+	onEditDone: (id, text) => dispatch(editDone(id, text))
+})
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(TodoListItem)

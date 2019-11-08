@@ -4,6 +4,8 @@ import InputWithButton from '../input-with-button'
 import { addTodo, typeTodo } from '../../actions'
 import { connect } from 'react-redux'
 import { NewTodo } from '../../types'
+import AddIcon from '@material-ui/icons/Add'
+import Typography from '@material-ui/core/Typography'
 
 const style = require('./app.css')
 
@@ -18,12 +20,12 @@ const App = (props: Props) => {
 
 	return (
 		<div className={style.container}>
-			<h1>ToDo List</h1>
+			<Typography variant="h4" gutterBottom>ToDo List</Typography>
 			<InputWithButton
 				onSubmit={onSubmit}
 				onTextChange={onTextChange}
 				newTodo={newTodo}
-				buttonLabel="Add"
+				IconComponent={<AddIcon />}
 			/>
 			<TodoList />
 		</div>

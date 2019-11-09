@@ -1,0 +1,1 @@
+Todo-list на typescript, с использованием React, Redux, React-Redux Hooks

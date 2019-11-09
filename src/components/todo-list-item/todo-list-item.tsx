@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import classnames from 'classnames'
 import InputWithButton from '../input-with-button'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { editMode, deleteTodo, toggleTodo, editDone } from '../../actions'
 import { Todo } from '../../types'
 import IconButton from '@material-ui/core/IconButton'
@@ -19,21 +19,19 @@ type MappedProps = {
 	onEditDone: (id: number, text: string) => void
 }
 
-type OwnProps = {
+type Props = {
 	item: Todo
 }
 
-type Props = OwnProps & MappedProps
-
-const TodoListItem = (props: Props) => {
-	const {
-		onToggleEdited,
-		onToggleCompleted,
-		onDelete,
-		onEditDone,
-		item
-	} = props
+const TodoListItem = ({item}: Props) => {
 	const { id, completed, text, isEdited } = item
+
+	const dispatch = useDispatch()
+
+	const onToggleEdited = useCallback(id => dispatch(editMode(id)), [dispatch])
+	const onToggleCompleted = useCallback(id => dispatch(toggleTodo(id)), [dispatch])
+	const onDelete = useCallback(id => dispatch(deleteTodo(id)), [dispatch])
+	const onEditDone = useCallback((id, text) => dispatch(editDone(id, text)), [dispatch])
 
 	const todoText = (
 		<Typography
@@ -78,14 +76,4 @@ const TodoListItem = (props: Props) => {
 	)
 }
 
-const mapDispatchToProps = dispatch => ({
-	onToggleEdited: id => dispatch(editMode(id)),
-	onToggleCompleted: id => dispatch(toggleTodo(id)),
-	onDelete: id => dispatch(deleteTodo(id)),
-	onEditDone: (id, text) => dispatch(editDone(id, text))
-})
-
-export default connect(
-	null,
-	mapDispatchToProps
-)(TodoListItem)
+export default TodoListItem

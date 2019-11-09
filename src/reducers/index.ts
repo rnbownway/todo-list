@@ -6,18 +6,7 @@ import {
 	EDIT_MODE,
 	EDIT_DONE
 } from '../actions'
-import { Todo, NewTodo } from '../types'
-
-type Action = {
-	type: string
-	payload: any
-}
-
-type State = {
-	todos: Todo[]
-	newTodo: NewTodo
-	count: number
-}
+import { Action, State } from '../types'
 
 const initialState: State = {
 	todos: [

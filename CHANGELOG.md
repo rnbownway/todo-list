@@ -1,4 +1,8 @@
-Ветка release-1.1.0 - todo-list на typescript + React
-Ветка release-1.2.0 - todo-list на typescript и React + Redux
-Ветка release-1.3.0 - изменение верстки, использование material-ui
-Ветка master - использование React-Redux хуков
+## Ветка master
+BREAKING CHANGES: использование React-Redux хуков
+## Ветка release-1.3.0
+FEATURES: изменение верстки, использование material-ui
+## Ветка release-1.2.0
+BREAKING CHANGES: todo-list на typescript и React + Redux
+## Ветка release-1.1.0
+FEATURES: todo-list на typescript + React

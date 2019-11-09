@@ -1,14 +1,10 @@
 import React, { Fragment } from 'react'
 import TodoListItem from '../todo-list-item'
-import { connect } from 'react-redux'
-import { Todo } from '../../types'
+import { useSelector, shallowEqual } from 'react-redux'
+import { Todo, State } from '../../types'
 
-type Props = {
-	todos: Todo[]
-}
-
-const TodoList = (props: Props) => {
-	const { todos } = props
+const TodoList = () => {
+	const todos: Todo[] = useSelector((state: State) => state.todos, shallowEqual)
 
 	const items = todos.map(item => {
 		const { id } = item
@@ -22,6 +18,4 @@ const TodoList = (props: Props) => {
 	return <div>{items}</div>
 }
 
-const mapStateToProps = state => ({ todos: state.todos })
-
-export default connect(mapStateToProps)(TodoList)
+export default TodoList

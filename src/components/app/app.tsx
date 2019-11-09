@@ -1,22 +1,20 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import TodoList from '../todo-list'
 import InputWithButton from '../input-with-button'
 import { addTodo, typeTodo } from '../../actions'
-import { connect } from 'react-redux'
-import { NewTodo } from '../../types'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { NewTodo, State } from '../../types'
 import AddIcon from '@material-ui/icons/Add'
 import Typography from '@material-ui/core/Typography'
 
 const style = require('./app.css')
 
-type Props = {
-	onSubmit: (text: string) => void
-	onTextChange: (text: string) => void
-	newTodo: NewTodo
-}
+const App = () => {
+	const newTodo: NewTodo = useSelector((state: State) => state.newTodo, shallowEqual)
+	const dispatch = useDispatch()
 
-const App = (props: Props) => {
-	const { onSubmit, onTextChange, newTodo } = props
+	const onSubmit = useCallback((text) => dispatch(addTodo(text)), [dispatch])
+	const onTextChange = useCallback((text) => dispatch(typeTodo(text)), [dispatch])
 
 	return (
 		<div className={style.container}>
@@ -32,16 +30,4 @@ const App = (props: Props) => {
 	)
 }
 
-const mapStateToProps = state => ({
-	newTodo: state.newTodo
-})
-
-const mapDispatchToProps = dispatch => ({
-	onSubmit: text => dispatch(addTodo(text)),
-	onTextChange: text => dispatch(typeTodo(text))
-})
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(App)
+export default App
